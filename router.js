@@ -20,7 +20,7 @@ module.exports = function() {
   
       User.create(userData, function(error, user) {
         if (error) {
-          console.log("error")
+          return next("error")
         }
         
         else {
@@ -36,21 +36,6 @@ module.exports = function() {
         return res.redirect('back');
       }
   })
-  
-	// GET for logout logout
-	router.get('/logout', function(req, res, next) {
-		if (req.session) {
-			// delete session object
-			req.session.destroy(function(error) {
-				if (error) {
-          return next(error);
-        }
-				else {
-					return res.redirect('/');
-				}
-			});
-		}
-	});
 
 	return router;
 };

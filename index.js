@@ -32,7 +32,7 @@ app.use(session({
     })
 }));
 
-var routes = require('./router')(io);
+var routes = require('./router');
 app.use('/', routes);
 
 
@@ -41,14 +41,11 @@ app.get("/", function (req, res, next) {
     next();
 });
 
-
-
 function updateUsers(){
     //io.emit('receive_profiles', profiles)
 }
 
 app.use(express.static("pub"));
-
 
 http.listen(port, function(){
     console.log('listening on ' + port);
