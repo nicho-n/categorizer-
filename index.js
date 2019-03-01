@@ -1,4 +1,4 @@
-var port = 3000;
+var port = 3001;
 var express = require("express");
 var mongoose = require("mongoose");
 var session = require('express-session');
@@ -13,14 +13,11 @@ var io = require('socket.io')(http);
 
 mongoose.connect('mongodb://localhost/auth');
 var db = mongoose.connection;
-
+ 
 app.use(bodyParser.urlencoded());
-app.use(cookieParser());
 
 db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function () {
-  console.log("I think we're connected");
-});
+db.once('open', function () {});
 
 app.use(session({
     secret: 'bleghhh',
@@ -32,13 +29,12 @@ app.use(session({
     })
 }));
 
-var routes = require('./router');
+var routes = require('./router')(io);
 app.use('/', routes);
 
 
 app.get("/", function (req, res, next) {
-    console.log(req.session.user);
-    next();
+    return next();
 });
 
 function updateUsers(){

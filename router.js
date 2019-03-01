@@ -25,6 +25,7 @@ module.exports = function() {
         
         else {
           req.session.user = user._id;
+          req.session.username = req.body.username;
           return res.sendStatus(200);
         }    
       
