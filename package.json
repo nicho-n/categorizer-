@@ -1,0 +1,10 @@
+{
+  "name": "rickos-social-networks",
+  "version": "0.0.1",
+  "description": "simple social networking page",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.15.2",
+    "mongodb": "^3.1.10"
+  }
+}

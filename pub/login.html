@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="cropper.css" type="text/css" />
+    <style>
+        body {
+            font-family: monospace;
+        }
+
+        #image_container
+        {
+            float:right; 
+        }
+        #cropped>img
+        {
+            margin-right: 10px;
+        }
+
+        #image_cropper_controls{
+            position: absolute;
+            top: 265px;
+            right: 10px;
+            width: 250px;
+            float: right;
+        }
+
+        #user_signup{
+            width: 300px;
+        }
+
+        .signup_box{
+            border: 1px solid grey;
+            width: 120px;
+            position: absolute;
+            left: 100px;
+        }
+
+        #submit_button{
+            position: absolute;
+            bottom: 40px;
+            left: 65px;
+        }
+
+        img{
+            margin: 0 auto;
+        }
+        
+    </style>
+</head>
+<body>
+    <div id="image_container">
+        <div class="imageBox">
+            <div class="thumbBox"></div>
+            <div class="spinner" style="display: none">Loading...</div>
+        </div>
+    </div>
+    <form id ="user_signup" action="/create_account" method="post">
+        <div id="image_cropper_controls">
+            <input type="file" id="file" style="float:left; width: 250px">
+            <input type="button" id="btnZoomIn" value="+" >
+            <input type="button" id="btnZoomOut" value="-" >
+        </div>
+        <h2>Sign up: easy and free!</h2>
+            Name:<input type="text" id="username" class="signup_box" name="username" /><br><br><br>
+            Password:<input type="text" class="signup_box" name="password" /><br><br>
+            Confirm <br> Password: <input type="text" class="signup_box" name="passwordConf" /><br><br><br>
+            Categorize <br> Yourself: <input type="text" class="signup_box" name="category" />
+            <input type="submit" id="submit_button" value="Submit" onclick="getUserInfo()">
+    </form>
+    <div id="cropped"></div>
+</body>
+<script src="../cropbox.js"></script>
+
+
+<script type="text/javascript">
+    
+    function getUserInfo(){
+        var username = document.getElementById("username").value;
+    }
+
+    window.onload = function() {
+        //image cropper
+        var options =
+        {
+            imageBox: '.imageBox',
+            thumbBox: '.thumbBox',
+            spinner: '.spinner',
+            imgSrc: 'avatar.png',
+            center: true
+        }
+        
+        var cropper = new cropbox(options);
+        
+        document.querySelector('#file').addEventListener('change', function(){
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                options.imgSrc = e.target.result;
+                cropper = new cropbox(options);
+            }
+            reader.readAsDataURL(this.files[0]);
+            this.files = [];
+        })
+        
+        document.querySelector('#btnCrop').addEventListener('click', function(){
+            var img = cropper.getDataURL();
+            document.querySelector('.cropped').innerHTML += '<img src="'+img+'">';
+        })
+        
+        document.querySelector('#btnZoomIn').addEventListener('click', function(){
+            cropper.zoomIn();
+        })
+        
+        document.querySelector('#btnZoomOut').addEventListener('click', function(){
+            cropper.zoomOut();
+        })
+        
+    };
+
+</script>
+</body>
+</html>
