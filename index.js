@@ -13,7 +13,7 @@ var io = require('socket.io')(http);
 
 mongoose.connect('mongodb://localhost/auth');
 var db = mongoose.connection;
- 
+
 app.use(bodyParser.urlencoded());
 app.use(cookieParser());
 
